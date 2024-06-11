@@ -39,6 +39,8 @@ import com.devrachit.jetscribe.common.ConnectivityObserver
 import com.devrachit.jetscribe.common.NetworkConnectivityObserver
 import com.devrachit.jetscribe.domain.model.Blog
 import com.devrachit.jetscribe.presentation.screens.homeScreen.components.BlogItem
+import com.devrachit.jetscribe.ui.theme.GrayShade1
+import com.devrachit.jetscribe.ui.theme.GrayShade2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,13 +67,13 @@ fun HomeScreen(
                 title = {
                     Text(
                         text = "Blog App",
-                        color = Color.Black,
+                        color = Color.White,
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = GrayShade1)
             )
         },
         snackbarHost = {
@@ -133,11 +135,11 @@ fun HomeScreenContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(GrayShade2)
             .padding(paddingValues)
             .padding(horizontal = 24.dp),
         contentPadding = PaddingValues(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(blogs.itemCount) {
             BlogItem(

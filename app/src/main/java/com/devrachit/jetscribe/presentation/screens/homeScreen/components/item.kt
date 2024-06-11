@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -47,6 +49,7 @@ fun BlogItem(
             modifier = Modifier
                 .fillMaxWidth(0.4f)
                 .aspectRatio(16.toFloat() / 9)
+                .clip(RoundedCornerShape(8.dp))
                 .constrainAs(image) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -62,25 +65,24 @@ fun BlogItem(
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 }
-                .padding(8.dp)
+                .padding(start=8.dp, end=8.dp)
         ) {
             Text(
                 text = blog.title,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 fontFamily = Poppins,
-                fontWeight = FontWeight(600),
-                fontSize = 16.sp,
-                color = Color.Black,
-                lineHeight = 24.sp
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                color = Color.White,
             )
             Text(
                 text = blog.date,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 fontFamily = Poppins,
-                fontSize = 12.sp,
-                color = Color.Black
+                fontSize = 10.sp,
+                color = Color.White
             )
         }
     }
