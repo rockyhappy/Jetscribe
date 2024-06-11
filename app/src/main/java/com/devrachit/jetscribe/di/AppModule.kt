@@ -2,6 +2,8 @@ package com.devrachit.jetscribe.di
 
 import com.devrachit.jetscribe.common.Constants
 import com.devrachit.jetscribe.data.remote.JetscribeApi
+import com.devrachit.jetscribe.data.repository.JetscribeRepositoryImpl
+import com.devrachit.jetscribe.domain.repository.JetscribeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

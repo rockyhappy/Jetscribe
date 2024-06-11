@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     id ("com.google.dagger.hilt.android")
-     id ("kotlin-android-extensions")
+//     id ("kotlin-android-extensions")
 }
 
 android {
@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.paging.common.android)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,19 +87,23 @@ dependencies {
     // For compose navigation testing
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
-
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-
+    debugImplementation("androidx.compose.ui:ui-tooling")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    val paging_version = "3.2.1"
+    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+    implementation("androidx.paging:paging-compose:3.2.1")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
 }
