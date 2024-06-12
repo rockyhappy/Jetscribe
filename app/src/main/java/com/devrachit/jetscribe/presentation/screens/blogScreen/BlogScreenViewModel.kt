@@ -18,12 +18,7 @@ class BlogScreenViewModel @Inject constructor(
     val sharedModel: SharedModel,
     private val database: SavedBlogDao
 ) : ViewModel() {
-    init {
-//        println(sharedModel.getBlog())
-//        viewModelScope.launch {
-//            println(database.getSavedBlogs())
-//        }
-    }
+
     private val _isFavorite= MutableStateFlow(false)
     val isFavorite= _isFavorite.asStateFlow()
 

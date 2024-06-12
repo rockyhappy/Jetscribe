@@ -7,8 +7,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -43,6 +49,7 @@ import com.devrachit.jetscribe.presentation.navigation.Screen
 import com.devrachit.jetscribe.presentation.screens.homeScreen.components.BlogItem
 import com.devrachit.jetscribe.ui.theme.GrayShade1
 import com.devrachit.jetscribe.ui.theme.GrayShade2
+import com.devrachit.jetscribe.ui.theme.pink
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,6 +97,18 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
+        ,
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                icon = { Icon(Icons.Filled.Favorite, contentDescription = null, tint = pink) },
+                text = { Text("My Favorite") },
+                onClick = { navController.navigate(Screen.FavScreen.route) },
+                containerColor = Color.White,
+                contentColor = Color.Black
+            )
+        }
+        ,
+        floatingActionButtonPosition = FabPosition.Center
     ) {
         HomeScreenContent(blogs, it , onItemClick2)
     }

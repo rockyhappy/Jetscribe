@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.devrachit.jetscribe.ui.theme.pink
 
 
 @Composable
@@ -42,7 +43,7 @@ fun FavoriteButton(isFavorite: Boolean,modifier: Modifier, onFavoriteClick: () -
     ) {
         Icon(
             imageVector = if (!isFavorite) Icons.Outlined.FavoriteBorder else Icons.Filled.Favorite,
-            tint = Color.Red,
+            tint = pink,
             contentDescription = null
         )
     }

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.devrachit.jetscribe.presentation.screens.blogScreen.BlogScreen
+import com.devrachit.jetscribe.presentation.screens.favScreen.FavScreen
 import com.devrachit.jetscribe.presentation.screens.homeScreen.HomeScreen
 
 @Composable
@@ -19,6 +20,10 @@ fun App() {
         composable(
             Screen.BlogScreen.route) {
             BlogScreen(navController)
+        }
+        composable(Screen.FavScreen.route)
+        {
+            FavScreen(navController)
         }
     }
 }
