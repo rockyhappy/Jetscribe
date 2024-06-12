@@ -7,3 +7,4 @@ data class Blog (
     val date: String,
     val url: String,
 )
+

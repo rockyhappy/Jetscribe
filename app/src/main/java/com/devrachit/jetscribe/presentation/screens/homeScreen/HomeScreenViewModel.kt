@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.devrachit.jetscribe.domain.model.Blog
+import com.devrachit.jetscribe.domain.model.SharedModel
 import com.devrachit.jetscribe.domain.use_case.GetBlogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val getBlogsUseCase: GetBlogsUseCase
+    private val getBlogsUseCase: GetBlogsUseCase,
+    val sharedModel: SharedModel
 ):ViewModel(){
     private val _blogs = MutableStateFlow<PagingData<Blog>>(PagingData.empty())
     val blogs = _blogs.asStateFlow()

@@ -7,8 +7,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -32,20 +38,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.devrachit.jetscribe.common.ConnectivityObserver
 import com.devrachit.jetscribe.common.NetworkConnectivityObserver
 import com.devrachit.jetscribe.domain.model.Blog
+import com.devrachit.jetscribe.presentation.navigation.Screen
 import com.devrachit.jetscribe.presentation.screens.homeScreen.components.BlogItem
+import com.devrachit.jetscribe.ui.theme.GrayShade4
+import com.devrachit.jetscribe.ui.theme.GrayShade2
+import com.devrachit.jetscribe.ui.theme.pink
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeScreenViewModel = hiltViewModel(),
-    onItemClick: (String) -> Unit = {}
+    navController: NavController,
 ) {
+    val viewModel: HomeScreenViewModel = hiltViewModel()
     val blogs = viewModel.blogs.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -54,6 +65,10 @@ fun HomeScreen(
         NetworkConnectivityObserver(LocalContext.current)
     var showConnectedSnackbar by remember {
         mutableStateOf(false)
+    }
+    val onItemClick2:(Blog) -> Unit = { blog ->
+        viewModel.sharedModel.setBlog(blog)
+        navController.navigate(Screen.BlogScreen.route)
     }
 
     val connectivityStatus = connectivityObserver.observe()
@@ -65,13 +80,13 @@ fun HomeScreen(
                 title = {
                     Text(
                         text = "Blog App",
-                        color = Color.Black,
+                        color = Color.White,
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = GrayShade2)
             )
         },
         snackbarHost = {
@@ -82,10 +97,20 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) {
-        HomeScreenContent(blogs, it) { url ->
-            onItemClick(url)
+        ,
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                icon = { Icon(Icons.Filled.Favorite, contentDescription = null, tint = pink) },
+                text = { Text("My Favorite") },
+                onClick = { navController.navigate(Screen.FavScreen.route) },
+                containerColor = Color.White,
+                contentColor = Color.Black
+            )
         }
+        ,
+        floatingActionButtonPosition = FabPosition.Center
+    ) {
+        HomeScreenContent(blogs, it , onItemClick2)
     }
 
     LaunchedEffect(connectivityStatus.value) {
@@ -128,22 +153,25 @@ fun HomeScreen(
 fun HomeScreenContent(
     blogs: LazyPagingItems<Blog>,
     paddingValues: PaddingValues,
-    onItemClick: (String) -> Unit
+    onItemClick: (Blog) -> Unit
+//    onItemClick: (String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(GrayShade4)
             .padding(paddingValues)
             .padding(horizontal = 24.dp),
         contentPadding = PaddingValues(vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(blogs.itemCount) {
-            BlogItem(
-                blogs[it]!!
-            ) { url ->
-                onItemClick(url)
+            blogs[it]?.let { blog ->
+                BlogItem(
+                    blog
+                ) {
+                    onItemClick(blog)
+                }
             }
         }
         when (val state = blogs.loadState.refresh) {
