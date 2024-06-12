@@ -14,20 +14,11 @@ fun App() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
         composable(Screen.HomeScreen.route) {
-            HomeScreen() {
-                navController.navigate(Screen.BlogScreen.route.plus("/$it"))
-            }
+            HomeScreen(navController)
         }
         composable(
-            Screen.BlogScreen.route.plus("/{url}"),
-            arguments = listOf(
-                navArgument("url") {
-                    type = NavType.StringType
-                }
-            )
-        ) {
-            val url = it.arguments?.getString("url")
-            BlogScreen(url = url ?: "")
+            Screen.BlogScreen.route) {
+            BlogScreen(navController)
         }
     }
 }

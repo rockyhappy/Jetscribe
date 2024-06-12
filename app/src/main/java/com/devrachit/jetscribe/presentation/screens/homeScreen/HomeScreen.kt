@@ -32,12 +32,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.devrachit.jetscribe.common.ConnectivityObserver
 import com.devrachit.jetscribe.common.NetworkConnectivityObserver
 import com.devrachit.jetscribe.domain.model.Blog
+import com.devrachit.jetscribe.presentation.navigation.Screen
 import com.devrachit.jetscribe.presentation.screens.homeScreen.components.BlogItem
 import com.devrachit.jetscribe.ui.theme.GrayShade1
 import com.devrachit.jetscribe.ui.theme.GrayShade2
@@ -45,9 +47,9 @@ import com.devrachit.jetscribe.ui.theme.GrayShade2
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeScreenViewModel = hiltViewModel(),
-    onItemClick: (String) -> Unit = {}
+    navController: NavController,
 ) {
+    val viewModel: HomeScreenViewModel = hiltViewModel()
     val blogs = viewModel.blogs.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -56,6 +58,10 @@ fun HomeScreen(
         NetworkConnectivityObserver(LocalContext.current)
     var showConnectedSnackbar by remember {
         mutableStateOf(false)
+    }
+    val onItemClick2:(Blog) -> Unit = { blog ->
+        viewModel.sharedModel.setBlog(blog)
+        navController.navigate(Screen.BlogScreen.route)
     }
 
     val connectivityStatus = connectivityObserver.observe()
@@ -85,9 +91,7 @@ fun HomeScreen(
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        HomeScreenContent(blogs, it) { url ->
-            onItemClick(url)
-        }
+        HomeScreenContent(blogs, it , onItemClick2)
     }
 
     LaunchedEffect(connectivityStatus.value) {
@@ -130,7 +134,8 @@ fun HomeScreen(
 fun HomeScreenContent(
     blogs: LazyPagingItems<Blog>,
     paddingValues: PaddingValues,
-    onItemClick: (String) -> Unit
+    onItemClick: (Blog) -> Unit
+//    onItemClick: (String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -142,10 +147,12 @@ fun HomeScreenContent(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(blogs.itemCount) {
-            BlogItem(
-                blogs[it]!!
-            ) { url ->
-                onItemClick(url)
+            blogs[it]?.let { blog ->
+                BlogItem(
+                    blog
+                ) {
+                    onItemClick(blog)
+                }
             }
         }
         when (val state = blogs.loadState.refresh) {

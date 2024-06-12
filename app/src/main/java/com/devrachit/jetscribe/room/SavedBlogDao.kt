@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.devrachit.jetscribe.domain.model.Blog
 
 
 @Dao
@@ -17,4 +18,7 @@ interface SavedBlogDao {
 
     @Query("DELETE FROM saved_blog WHERE id = :id")
     suspend fun deleteSavedBlog(id: Int)
+
+    @Query("SELECT * FROM saved_blog WHERE id = :id")
+    suspend fun getSavedBlog(id: Int): SavedBlog
 }
