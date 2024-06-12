@@ -1,5 +1,6 @@
 package com.devrachit.jetscribe.presentation.screens.favScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,8 @@ import com.devrachit.jetscribe.domain.model.Blog
 import com.devrachit.jetscribe.presentation.navigation.Screen
 import com.devrachit.jetscribe.presentation.screens.homeScreen.components.BlogItem
 import com.devrachit.jetscribe.ui.theme.GrayShade1
+import com.devrachit.jetscribe.ui.theme.GrayShade2
+import com.devrachit.jetscribe.ui.theme.GrayShade4
 
 @ExperimentalMaterial3Api
 @Composable
@@ -51,18 +54,22 @@ fun FavScreen(navController: NavController)
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = GrayShade1)
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = GrayShade2)
             )
         },
         modifier = Modifier
             .fillMaxSize()
+            .background(GrayShade4)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-        ,)
+        ,
+        containerColor = GrayShade4
+        )
     {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding( end = 16.dp, start = 16.dp, bottom = 30.dp)
+                .background(GrayShade4)
                 .padding(it),
             contentPadding = PaddingValues(vertical = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)

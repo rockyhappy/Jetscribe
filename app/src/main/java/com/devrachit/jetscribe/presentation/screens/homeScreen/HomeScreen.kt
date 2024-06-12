@@ -47,7 +47,7 @@ import com.devrachit.jetscribe.common.NetworkConnectivityObserver
 import com.devrachit.jetscribe.domain.model.Blog
 import com.devrachit.jetscribe.presentation.navigation.Screen
 import com.devrachit.jetscribe.presentation.screens.homeScreen.components.BlogItem
-import com.devrachit.jetscribe.ui.theme.GrayShade1
+import com.devrachit.jetscribe.ui.theme.GrayShade4
 import com.devrachit.jetscribe.ui.theme.GrayShade2
 import com.devrachit.jetscribe.ui.theme.pink
 
@@ -86,7 +86,7 @@ fun HomeScreen(
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = GrayShade1)
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = GrayShade2)
             )
         },
         snackbarHost = {
@@ -159,7 +159,7 @@ fun HomeScreenContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(GrayShade2)
+            .background(GrayShade4)
             .padding(paddingValues)
             .padding(horizontal = 24.dp),
         contentPadding = PaddingValues(vertical = 24.dp),
