@@ -79,7 +79,7 @@ fun HomeScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Blog App",
+                        text = "Jetscribe",
                         color = Color.White,
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
